@@ -1,31 +1,74 @@
-double calculateBMI(double weight, double height) {
-  return weight / (height * height);
+
+class Person {
+  String _name;
+  int _age;
+
+  Person(this._name, this._age);
+
+  String get name => _name;
+  int get age => _age;
+
+ String getinfo(){
+   return 'Name: $_name, Age: $_age' ;
+ }
 }
 
-String getBMICategory(double bmi) {
+class Driver extends Person{
+  String _vehicle;
 
-if (bmi<18.5){
-  return "Category: Underweight";
+  Driver (String name, int age, this._vehicle): super(name, age);
+
+  @override
+  String getinfo(){
+    return 'Name: $name, \nAge: $age, \nVehicale: $_vehicle';
+  }
 }
-else if(bmi<24.9){
-  return"Category: Normal";
+
+abstract class Ride {
+
+  double calculateFare(double distance);
 }
-else if(bmi<29.9){
-  return"Category: Overweight";
+
+// Step 2: BikeRide Class
+class BikeRide extends Ride {
+
+  double farePerKm = 20.0;
+
+  // Abstract method এর implementation
+  @override
+  double calculateFare(double distance) {
+
+    double totalFare = distance * farePerKm;
+
+
+    return totalFare;
+  }
 }
-else{
-  return"Category: Obese";
-}
+
+
+void printFare(Ride ride, double distance) {
+
+  double fare = ride.calculateFare(distance);
+  print("="*25 + "\n");
+  print("Total Distance: ${distance} km");
+  print("Total Fare: ${fare.toStringAsFixed(2)} tk");
+
 }
 
 
 void main(){
-  double weight =70;
-  double height =1.65;
 
-  double bmi = calculateBMI(weight , height);
-  String category = getBMICategory( bmi);
+  var driver = Driver('Khalid', 30 ,'Bike');
+  print(driver.getinfo());
 
-  print("Your BMI is: ${bmi.toStringAsFixed(2)}");
-  print("Category is: $category");
+
+  BikeRide myBikeRide = BikeRide();
+  printFare(myBikeRide, 15);
+  printFare(myBikeRide, 10);
+
 }
+
+
+
+
+
